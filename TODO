@@ -4,7 +4,6 @@ Todo:
     ☐ draw out layout
   ☐ javascript
     ☐ build known functions
-
   ☐ css
   ☐ question timer
     `continue`
@@ -16,6 +15,7 @@ Todo:
     `number of incorrect`
     `number of unanswered`
   ☐ restart button
+
   //Variables//
   ☐ timer
   ☐ numCorrect
@@ -24,10 +24,10 @@ Todo:
   ☐ correctAnswer
   ☐ incorrectAnswer
   ☐ question
+
   //Functions//
-  ☐ timer
-  ☐ start game
-  ☐ restart game
+  ☐ countdown timer
+  ☐ initialize game
   ☐ submit answer
   ☐ randomize questions
   ☐ randomize answers

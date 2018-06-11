@@ -1,0 +1,33 @@
+
+Todo:
+  ☐ html
+    ☐ draw out layout
+  ☐ javascript
+    ☐ build known functions
+
+  ☐ css
+  ☐ question timer
+    `continue`
+  ☐ submit answer button
+    `if correct, correct content for 4 seconds then next question`
+    `if incorrect, show correct answer for 4 seconds then next question`
+  ☐ final screen
+    `number of correct`
+    `number of incorrect`
+    `number of unanswered`
+  ☐ restart button
+  //Variables//
+  ☐ timer
+  ☐ numCorrect
+  ☐ numIncorrect
+  ☐ numUnanswered
+  ☐ correctAnswer
+  ☐ incorrectAnswer
+  ☐ question
+  //Functions//
+  ☐ timer
+  ☐ start game
+  ☐ restart game
+  ☐ submit answer
+  ☐ randomize questions
+  ☐ randomize answers

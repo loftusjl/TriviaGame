@@ -1,7 +1,16 @@
 
 Todo:
   ☐ html
-    ☐ draw out layout
+    ✔ draw out layout @done(18-06-11 18:14)
+    ☐ get shorter image for card top
+    $('#questionText')
+    $('#questionNum')
+    $('#answerList')
+    $('#correctAnswer')
+    $('#skip')
+    $('#submit')
+    $('#next')
+    $('#timer')
   ☐ javascript
     ☐ build known functions
   ☐ css
@@ -29,5 +38,6 @@ Todo:
   ☐ countdown timer
   ☐ initialize game
   ☐ submit answer
-  ☐ randomize questions
-  ☐ randomize answers
+  `list-group-item-success`
+  ✔ randomize questions @done(18-06-12 13:44)
+  ✘ randomize answers @cancelled(18-06-12 13:44)

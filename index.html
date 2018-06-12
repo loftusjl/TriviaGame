@@ -9,25 +9,26 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css" />
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
     <script src="./assets/javascript/app.js"></script>
 </head>
 
-<body>
+<body class="bg-light">
         <div class="card mx-auto" style="width: 75%;">
-                <img class="card-img-top" src="https://www.fillmurray.com/180/100" alt="Card image cap">
+                <img class="card-img-top img-fluid" src="./assets/images/hipaa-icon.png" alt="Card image cap">
                 <div class="card-body">
-                  <h1 class="card-title"><img src="https://www.fillmurray.com/100/100"> Company Name</h1>
-                  <h3># Question</h3>
-                  <p class="card-text">Question text goes here Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis.</p>
+                  <h1 class="card-title text-center"><img src="./assets/images/hipaa_blue.png" style="max-width: 150px;">2016 HIPAA Knowledge Check</h1>
+                  <h3 id="questionNum"># Question</h3>
+                  <p id="questionText" class="card-text">Question text goes here Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis.</p>
                 </div>
-                <ol type="a" class="list-group list-group-flush">
-                  <li class="list-group-item">Zombie ipsum reversus ab viral inferno, nam rick grimes malum</li>
+                <ol id="answerList" class="list-group">
                 </ol>
                 <div class="card-body container">
                   <div class="row mx-auto">
-                      <div class="col-4"><a href="#" class="btn btn-primary">Skip Question</a></div>
-                      <div class="col-4"><h3>Timer ##</h3></div>
-                      <div class="col-4"><a href="#" class="btn btn-primary">Submit</a></div>
+                      <div id="skip" class="col-4"><a href="#" class="btn btn-primary">Skip Question</a></div>
+                      <div class="col-4"><h3 id="countdown">Timer: 00</h3></div>
+                      <div id="submit" class="col-4"><a href="#" class="btn btn-primary">Submit</a></div>
                   </div>
                 </div>
               </div>

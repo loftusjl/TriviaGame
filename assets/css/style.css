@@ -1,0 +1,9 @@
+.list-answer{
+    border: 1px solid lightgray;
+    margin: 0;
+    padding: 5px;
+}
+#questionNum {
+    text-align: justify;
+    /* text-justify: inter-word; */
+}

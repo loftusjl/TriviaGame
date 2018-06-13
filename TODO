@@ -7,7 +7,7 @@ Todo:
     $('#questionNum')
     $('#answerList')
     $('#correctAnswer')
-    $('#skip')
+    ✘ $('#skip') @cancelled(18-06-12 15:37)
     $('#submit')
     $('#next')
     $('#timer')

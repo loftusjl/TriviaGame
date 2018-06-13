@@ -18,20 +18,22 @@
         <div class="card mx-auto" style="width: 75%;">
                 <img class="card-img-top img-fluid" src="./assets/images/hipaa-icon.png" alt="Card image cap">
                 <div class="card-body">
-                  <h1 class="card-title text-center"><img src="./assets/images/hipaa_blue.png" style="max-width: 150px;">2016 HIPAA Knowledge Check</h1>
-                  <h3 id="questionNum"># Question</h3>
-                  <p id="questionText" class="card-text">Question text goes here Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis.</p>
+                  <h1 class="card-title text-center"><img src="./assets/images/hipaa_blue.png" style="max-width: 150px;" class="mx-5">Knowledge Check</h1>
+                  <h3 id="questionNum"></h3>
+                  <h4 id="questionText" class="card-text">2016 Health Insurance Portability and Accountability Act (HIPAA) training challenge quiz.</h4>
                 </div>
-                <ol id="answerList" class="list-group">
-                </ol>
-                <div class="card-body container">
-                  <div class="row mx-auto">
-                      <div id="skip" class="col-4"><a href="#" class="btn btn-primary">Skip Question</a></div>
-                      <div class="col-4"><h3 id="countdown">Timer: 00</h3></div>
-                      <div id="submit" class="col-4"><a href="#" class="btn btn-primary">Submit</a></div>
-                  </div>
+                <div class="container">
+                    <div id="answerList" class="row d-flex flex-column">
+                    </div>
+                    <div class="card-body container row">
+                        <div id="controls" class="row mx-auto">
+                            <div class="col-4"></div>
+                            <div class="col-4"><h3 id="countdown">Timer: 00</h3></div>
+                            <div id="start" class="col-4 ml-auto"><a href="#" class="btn btn-primary">Start Quiz</a></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+        </div>
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

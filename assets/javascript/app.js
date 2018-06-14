@@ -1,11 +1,7 @@
-// letIABLES
-// let timer = resetTimer.timer;
 let numCorrect = 0;
 let numIncorrect = 0;
 let numUnanswered = 0;
-let questionNum = 1;
-let skip = $('#skip');
-let submit = $('#submit');
+let questionNum = 19;
 let questions = [{ //question, correct, answers[]
         question: "In which of the following circumstances must an individual be given the opportunity to agree or object to the use and disclosure of their PHI? ",
         correct: "D. Both A and C",
@@ -171,7 +167,6 @@ let questions = [{ //question, correct, answers[]
         ]
     }
 ]
-let randQuestion = '';
 // BODY
 window.onload = function () {
     $('#start').click(function () {
@@ -181,9 +176,12 @@ window.onload = function () {
                 var selValue = $('input[name=answers]:checked').val();
                 submitAnswer(selValue);
             });
+            if (questionNum === 20) {
+                clearInterval(countdownTimer);
+                $('#answerList').remove();
+                $('#answerList').append(`<div class="col-4">Correct: ${numCorrect}</div><div class="col-4">Incorrect: ${numIncorrect}</div><div class="col-4">Unanswered: ${numUnanswered}</div>`);
+            };
     });
-    
-
 };
 $(document).click(function () {
     $('input[name=answers]:checked').closest('label').toggleClass('btn-success');
@@ -199,19 +197,21 @@ function countdownTimer() {
         randomizeQuestions();
         randomizeAnswers();
     }
+    
     timer--;
     $('#countdown').text(`Timer: ${timer}`)
 };
 
 function resetTimer() {
-    timer = 60;
+    timer = 10;
 }
 
 function initializeGame() {
     $('#start').remove()
-    let numCorrect = 0;
-    let numIncorrect = 0;
-    let numUnanswered = 0;
+    numCorrect = 0;
+    numIncorrect = 0;
+    numUnanswered = 0;
+    questionNum = 19;
     $('.list-answer').remove();
     resetTimer();
     setInterval(countdownTimer, 1000);
@@ -242,3 +242,10 @@ function randomizeAnswers() {
         ${ans}</label>`)
 })
 };
+function resultsScreen() {
+    if (questionNum > 20) {
+        $('#answerList').remove();
+        $('#answerList').append(`<div class="col-4">Correct: ${numCorrect}</div><div class="col-4">Incorrect: ${numIncorrect}</div><div class="col-4">Unanswered: ${numUnanswered}</div>`);
+        clearInterval(countdownTimer);
+    };
+}

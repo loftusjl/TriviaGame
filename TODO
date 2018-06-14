@@ -11,12 +11,12 @@ Todo:
     $('#submit')
     $('#next')
     $('#timer')
-  ☐ javascript
-    ☐ build known functions
+  ✔ javascript @done(18-06-13 18:04)
+    ✔ build known functions @done(18-06-13 18:04)
   ☐ css
-  ☐ question timer
-    `continue`
-  ☐ submit answer button
+  ✔ question timer @done(18-06-13 18:02)
+    ✔ `continue` @done(18-06-13 18:03)
+  ✔ submit answer button @done(18-06-13 18:04)
     `if correct, correct content for 4 seconds then next question`
     `if incorrect, show correct answer for 4 seconds then next question`
   ☐ final screen
@@ -26,18 +26,18 @@ Todo:
   ☐ restart button
 
   //Variables//
-  ☐ timer
+  ✔ timer @done(18-06-13 18:04)
   ☐ numCorrect
   ☐ numIncorrect
   ☐ numUnanswered
-  ☐ correctAnswer
-  ☐ incorrectAnswer
-  ☐ question
+  ✔ correctAnswer @done(18-06-13 18:03)
+  ✔ incorrectAnswer @done(18-06-13 18:03)
+  ✔ question @done(18-06-13 18:03)
 
   //Functions//
-  ☐ countdown timer
-  ☐ initialize game
-  ☐ submit answer
-  `list-group-item-success`
+  ✔ countdown timer @done(18-06-13 18:03)
+  ✔ initialize game @done(18-06-13 18:03)
+  ✔ submit answer @done(18-06-13 18:03)
+  ✘ `list-group-item-success` @cancelled(18-06-13 18:03)
   ✔ randomize questions @done(18-06-12 13:44)
   ✘ randomize answers @cancelled(18-06-12 13:44)

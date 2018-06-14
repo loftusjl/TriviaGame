@@ -176,11 +176,7 @@ window.onload = function () {
                 var selValue = $('input[name=answers]:checked').val();
                 submitAnswer(selValue);
             });
-            if (questionNum === 20) {
-                clearInterval(countdownTimer);
-                $('#answerList').remove();
-                $('#answerList').append(`<div class="col-4">Correct: ${numCorrect}</div><div class="col-4">Incorrect: ${numIncorrect}</div><div class="col-4">Unanswered: ${numUnanswered}</div>`);
-            };
+
     });
 };
 $(document).click(function () {
@@ -191,6 +187,9 @@ function countdownTimer() {
     if (timer < 1) {
         questionNum++;
         numUnanswered++;
+        if (questionNum >= 20){
+            
+        }
         resetTimer();
         $('#questionNum').text(`Question: ${questionNum}`)
         $('.list-answer').remove();
@@ -243,9 +242,7 @@ function randomizeAnswers() {
 })
 };
 function resultsScreen() {
-    if (questionNum > 20) {
         $('#answerList').remove();
         $('#answerList').append(`<div class="col-4">Correct: ${numCorrect}</div><div class="col-4">Incorrect: ${numIncorrect}</div><div class="col-4">Unanswered: ${numUnanswered}</div>`);
         clearInterval(countdownTimer);
-    };
 }

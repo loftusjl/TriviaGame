@@ -170,11 +170,11 @@ let questions = [{ //question, correct, answers[]
 // BODY
 window.onload = function () {
     $('#start').click(function () {
-        initializeGame(),
+        game.initializeGame(),
             $('#controls').append('<div id="submit" class="col-4 mx-auto"><a href="#" class="btn btn-primary">Submit</a></div>'),
             $('#submit').click(function () {
                 var selValue = $('input[name=answers]:checked').val();
-                submitAnswer(selValue);
+                game.submitAnswer(selValue);
             });
 
     });
@@ -183,66 +183,74 @@ $(document).click(function () {
     $('input[name=answers]:checked').closest('label').toggleClass('btn-success');
 });
 // FUNCTIONS
-function countdownTimer() {
-    if (timer < 1) {
-        questionNum++;
-        numUnanswered++;
-        if (questionNum >= 20){
-            
-        }
-        resetTimer();
-        $('#questionNum').text(`Question: ${questionNum}`)
-        $('.list-answer').remove();
-        randomizeQuestions();
-        randomizeAnswers();
-    }
-    
-    timer--;
-    $('#countdown').text(`Timer: ${timer}`)
-};
+let countdownTimer = {
+    timer: 10,
+    timeout: function () {
+        clearInterval(countdownTimer.timerLoop);
+        resultsScreen();
+        // if (questionNum > 19) {
+        // }
+        // else if (timer < 1) {
+        //     questionNum++;
+        //     numUnanswered++;
+        //     resetTimer();
+        //     $('#questionNum').text(`Question: ${questionNum}`)
+        //     $('.list-answer').remove();
+        //     game.randomizeQuestions();
+        //     game.randomizeAnswers();
+        // }
 
-function resetTimer() {
-    timer = 10;
+    },
+    timerLoop: setInterval(function() {
+        countdownTimer.timer--;
+        $('#countdown').text(`Timer: ${countdownTimer.timer}`)
+    }, 1000)
 }
 
-function initializeGame() {
-    $('#start').remove()
-    numCorrect = 0;
-    numIncorrect = 0;
-    numUnanswered = 0;
-    questionNum = 19;
-    $('.list-answer').remove();
-    resetTimer();
-    setInterval(countdownTimer, 1000);
-    randomizeQuestions();
-    randomizeAnswers();
-    $('#questionText').text(randQuestion.question);
-    $('#questionNum').text(`Question: ${questionNum}`)
-};
-
-function submitAnswer(ans) {
-    if (ans == String(randQuestion.correct)) {
-        numCorrect++;
-        console.log(`Correct! ${randQuestion.correct}`);
-    } else {
-        console.log(`${ans} is incorrect! The answer was ${randQuestion.correct}`);
-        numIncorrect++;
+function resetTimer() {
+    countdownTimer.timer = 10;
+}
+let game = {
+    initializeGame: function () {
+        $('#start').remove()
+        numCorrect = 0;
+        numIncorrect = 0;
+        numUnanswered = 0;
+        questionNum = 19;
+        $('.list-answer').remove();
+        resetTimer();
+        setTimeout(function() {
+            clearInterval(countdownTimer.timerLoop);
+            resultsScreen();
+        }, 10000);
+        countdownTimer.timerLoop;
+        game.randomizeQuestions();
+        game.randomizeAnswers();
+        $('#questionText').text(randQuestion.question);
+        $('#questionNum').text(`Question: ${questionNum}`)
+    },
+    submitAnswer: function (ans) {
+        if (ans == String(randQuestion.correct)) {
+            numCorrect++;
+            console.log(`Correct! ${randQuestion.correct}`);
+        } else {
+            console.log(`${ans} is incorrect! The answer was ${randQuestion.correct}`);
+            numIncorrect++;
+        }
+    },
+    randomizeQuestions: function () {
+        randQuestion = questions[Math.floor(Math.random() * questions.length)];
+        console.log(randQuestion);
+    },
+    randomizeAnswers: function () {
+        randQuestion.answers.forEach(function (ans) {
+            $('#answerList').append(`<label class="list-answer"><input type="radio" name="answers" value="${ans}" autocomplete="off">
+            ${ans}</label>`)
+        })
     }
-};
+}
 
-function randomizeQuestions() {
-    randQuestion = questions[Math.floor(Math.random() * questions.length)];
-    console.log(randQuestion);
-};
-
-function randomizeAnswers() {
-    randQuestion.answers.forEach(function (ans) {
-        $('#answerList').append(`<label class="list-answer"><input type="radio" name="answers" value="${ans}" autocomplete="off">
-        ${ans}</label>`)
-})
-};
 function resultsScreen() {
-        $('#answerList').remove();
-        $('#answerList').append(`<div class="col-4">Correct: ${numCorrect}</div><div class="col-4">Incorrect: ${numIncorrect}</div><div class="col-4">Unanswered: ${numUnanswered}</div>`);
-        clearInterval(countdownTimer);
+    $('#answerList').remove();
+    $('#answerList').html(`<div class="col-4">Correct: ${numCorrect}</div><div class="col-4">Incorrect: ${numIncorrect}</div><div class="col-4">Unanswered: ${numUnanswered}</div>`);
 }

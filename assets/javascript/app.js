@@ -250,7 +250,7 @@ let game = {
         //     game.randomizeQuestions();
         //     game.randomizeAnswers();
     },
-    answerCheck: function () {
+    answerCheck: function (ans) {
         $('.list-answer, #countdown, #correct').remove();
         randQuestion.answers.forEach(function (e) {
             if (e === String(randQuestion.correct)) {

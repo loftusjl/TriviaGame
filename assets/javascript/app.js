@@ -188,12 +188,13 @@ $(document).click(function () {
 
 let game = {
     initializeGame: function () {
-        $('#start').remove()
-        
+        $('#start').remove();
+        $('#reset').remove();
+
         numCorrect = 0;
         numIncorrect = 0;
         numUnanswered = 0;
-        questionNum = 1;
+        questionNum = 19;
         // resultsScreen();
         game.nextQuestion();
 
@@ -282,8 +283,6 @@ let game = {
 };
 
 // FUNCTIONS
-
-
 function countdownTimer() {
     timer--;
     console.log(`countdownTimer ${timer}`);
@@ -321,7 +320,14 @@ function resultsScreen() {
     $('#questionNum').text(`Test Complete`)
     $('#questionText').text(`Results: ${((numCorrect > 6) ? 'PASSED' : 'FAILED, you must score 70% or higher.')}`); // if above 75%, pass, else fail
     $('.list-answer, #countdown, #correct').remove();
-    $('#answerList').append(`<div class="display-4 mx-auto font-weight-bold">Correct: ${numCorrect}</div>`);
-    $('#answerList').append(`<div class="display-4 mx-auto font-weight-bold">Incorrect: ${numIncorrect}</div>`);
-    $('#answerList').append(`<div class="display-4 mx-auto font-weight-bold">Unanswered: ${numUnanswered}</div>`);
+    $('#answerList').append(`<div class="list-answer display-4 mx-auto font-weight-bold">Correct: ${numCorrect}</div>`);
+    $('#answerList').append(`<div class="list-answer display-4 mx-auto font-weight-bold">Incorrect: ${numIncorrect}</div>`);
+    $('#answerList').append(`<div class="list-answer display-4 mx-auto font-weight-bold">Unanswered: ${numUnanswered}</div>`);
+    $('#controls').append('<div id="restart" class="col-4 mx-auto"><a href="#" class="btn btn-primary">Restart Test</a></div>');
+    $('#restart').on('click', function() {
+        $('.list-answer').remove();
+        $('#restart').remove();
+        game.initializeGame();
+        console.log(`restart clicked`);
+    })
 };

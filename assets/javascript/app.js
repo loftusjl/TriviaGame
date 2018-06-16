@@ -174,6 +174,7 @@ let questions = [{ //question, correct, answers[]
 window.onload = function () {
     answerTimerStop();
     countdownTimerStop();
+    
     $('#start').click(function () {
         $('#controls').append('<div id="countdown" class="col-6"><h3>Timer: 10</h3></div>');
         game.initializeGame();
@@ -193,12 +194,13 @@ let game = {
         numIncorrect = 0;
         numUnanswered = 0;
         questionNum = 1;
+        // resultsScreen();
         game.nextQuestion();
 
     },
     nextQuestion: function () {
         answerTimerStop();
-        resetTimer();
+        resetTimer(10);
         console.log(`nextQuestion timer reset: ${timer}`)
         timerLoop = setInterval(countdownTimer, 1000);
         $('.list-answer').remove();
@@ -216,7 +218,7 @@ let game = {
     },
     submitAnswer: function (ans) { // add if 20 to submit answer. delete timeout. make countdowntimer check if timer = 0. reset timer whenever needed.
         countdownTimerStop();
-        resetTimer();
+        resetTimer(5);
         displayAnswer = setInterval(answerTimer, 1000);
         console.log(`submitAnswer timer reset: ${timer}`)
         game.answerCheck(ans);
@@ -226,7 +228,7 @@ let game = {
         if (ans === String(randQuestion.correct)) { // correct answer
             questionNum++;
             numCorrect++;
-            if (questionNum >= 10) {
+            if (questionNum > 10) {
                 resultsScreen();
             } else {
                 $('#controls').append('<div id="correct" class="col-6 btn-success"><h3>Correct!</h3></div>');
@@ -235,7 +237,7 @@ let game = {
         if (ans === 0) { // timeout
             questionNum++;
             numUnanswered++
-            if (questionNum >= 10) {
+            if (questionNum > 10) {
                 resultsScreen();
             } else{
                 $('#controls').append('<div id="correct" class="col-6 btn-danger"><h3>Incorrect!</h3></div>');
@@ -243,7 +245,7 @@ let game = {
         } else { // incorrect answer
             questionNum++;
             numIncorrect++;
-            if (questionNum >= 10) {
+            if (questionNum > 10) {
                 resultsScreen();
             } else {
                 $('input[name=answers]:checked').closest('label').toggleClass('btn-danger');
@@ -310,16 +312,16 @@ function countdownTimerStop() {
     console.log(`Stop Countdown`)
 };
 
-function resetTimer() {
-    timer = 10;
+function resetTimer(t) {
+    timer = t;
 };
 function resultsScreen() {
     answerTimerStop();
     countdownTimerStop();
-    $('#questionText').text(`Results`); // if above 75%, pass, else fail
-    $('#questionNum').text(`Below is a breakdown of your score.`)
+    $('#questionNum').text(`Test Complete`)
+    $('#questionText').text(`Results: ${((numCorrect > 6) ? 'PASSED' : 'FAILED, you must score 70% or higher.')}`); // if above 75%, pass, else fail
     $('.list-answer, #countdown, #correct').remove();
-    $('#answerList').append(`<div class="display-4">Correct: ${numCorrect}</div>`);
-    $('#answerList').append(`<div class="display-4">Incorrect: ${numIncorrect}</div>`);
-    $('#answerList').append(`<div class="display-4">Unanswered: ${numUnanswered}</div>`);
+    $('#answerList').append(`<div class="display-4 mx-auto font-weight-bold">Correct: ${numCorrect}</div>`);
+    $('#answerList').append(`<div class="display-4 mx-auto font-weight-bold">Incorrect: ${numIncorrect}</div>`);
+    $('#answerList').append(`<div class="display-4 mx-auto font-weight-bold">Unanswered: ${numUnanswered}</div>`);
 };

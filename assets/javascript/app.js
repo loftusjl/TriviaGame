@@ -1,4 +1,7 @@
 let controls = $('#controls');
+let timerLoop = setInterval(countdownTimer, 1000);
+let displayAnswer = setInterval(answerTimer, 1000);
+let timer = 10;
 let questions = [{ //question, correct, answers[]
         question: "In which of the following circumstances must an individual be given the opportunity to agree or object to the use and disclosure of their PHI? ",
         correct: "D. Both A and C",
@@ -163,64 +166,41 @@ let questions = [{ //question, correct, answers[]
             "D. All of the above"
         ]
     }
-]
+];
 
 // click start button. create timer and submit button. 
 // run game.initializeGame
 // push selected value through game.submitAnswer
 window.onload = function () {
+    answerTimerStop();
+    countdownTimerStop();
     $('#start').click(function () {
         $('#controls').append('<div id="countdown" class="col-6"><h3>Timer: 10</h3></div>');
         game.initializeGame();
-        $('#submit').click(function () {
-            clearTimeout(game.nextQuestion.nextQuestionTimeout);
-            var selValue = $('input[name=answers]:checked').val();
-            game.submitAnswer(selValue);
-        });
     });
 };
+
 // when answer is clicked, highlight green
 $(document).click(function () {
     $('input[name=answers]:checked').closest('label').toggleClass('btn-success');
 });
 
-// timer handler
-let countdownTimer = {
-    timer: 10,
-    timeoutCounter: 10000,
-    // clear interval on timerLoop
-    // 
-    timeout: function () {
-        if (questionNum > 2) {
-            resultsScreen();
-        } else {
-            game.submitAnswer(0);
-        }
-    },
-    timerLoop: setInterval(function () {
-        countdownTimer.timer--;
-        $('#countdown h3').text(`Timer: ${countdownTimer.timer}`)
-    }, 1000),
-    resetTimer: function () {
-        countdownTimer.timer = 10;
-    }
-}
-
 let game = {
     initializeGame: function () {
         $('#start').remove()
+        
         numCorrect = 0;
         numIncorrect = 0;
         numUnanswered = 0;
         questionNum = 1;
         game.nextQuestion();
-        countdownTimer.resetTimer();
+
     },
     nextQuestion: function () {
-        countdownTimer.resetTimer();
-        nextQuestionTimeout = setTimeout(function () {
-            game.submitAnswer(0);
-        }, countdownTimer.timeoutCounter);
+        answerTimerStop();
+        resetTimer();
+        console.log(`nextQuestion timer reset: ${timer}`)
+        timerLoop = setInterval(countdownTimer, 1000);
         $('.list-answer').remove();
         $('#correct').remove();
         game.randomizeQuestions();
@@ -228,38 +208,49 @@ let game = {
         $('#questionText').text(randQuestion.question);
         $('#questionNum').text(`Question: ${questionNum}`)
         $('#controls').append('<div id="submit" class="col-4 mx-auto"><a href="#" class="btn btn-primary">Submit</a></div>');
+        $('#submit').on('click', function () {
+            console.log(`Submit button clicked! Honest!`)
+            var selValue = $('input[name=answers]:checked').val();
+            game.submitAnswer(selValue);
+        });
     },
-    submitAnswer: function (ans) {
+    submitAnswer: function (ans) { // add if 20 to submit answer. delete timeout. make countdowntimer check if timer = 0. reset timer whenever needed.
+        countdownTimerStop();
+        resetTimer();
+        displayAnswer = setInterval(answerTimer, 1000);
+        console.log(`submitAnswer timer reset: ${timer}`)
         game.answerCheck(ans);
         $('#correct').remove();
         $('#submit').remove();
-        countdownTimer.resetTimer();
-
-        submitTimeout = setTimeout(function () {
-            $('#correct').remove();
-            countdownTimer.resetTimer();
-            game.nextQuestion()
-        }, countdownTimer.timeoutCounter);
 
         if (ans === String(randQuestion.correct)) { // correct answer
-            clearTimeout(submitTimeout);
-            numCorrect++;
             questionNum++;
-            $('#controls').append('<div id="correct" class="col-6 btn-success"><h3>Correct!</h3></div>');
-            console.log(`Correct! ${randQuestion.correct}`);
+            numCorrect++;
+            if (questionNum >= 10) {
+                resultsScreen();
+            } else {
+                $('#controls').append('<div id="correct" class="col-6 btn-success"><h3>Correct!</h3></div>');
+            }
         } else
         if (ans === 0) { // timeout
             questionNum++;
             numUnanswered++
-            $('#controls').append('<div id="correct" class="col-6 btn-danger"><h3>Incorrect!</h3></div>');
+            if (questionNum >= 10) {
+                resultsScreen();
+            } else{
+                $('#controls').append('<div id="correct" class="col-6 btn-danger"><h3>Incorrect!</h3></div>');
+            }
         } else { // incorrect answer
-            numIncorrect++;
             questionNum++;
-            $('input[name=answers]:checked').closest('label').toggleClass('btn-danger');
+            numIncorrect++;
+            if (questionNum >= 10) {
+                resultsScreen();
+            } else {
+                $('input[name=answers]:checked').closest('label').toggleClass('btn-danger');
             $('#controls').append('<div id="correct" class="col-6 btn-danger"><h3>Incorrect!</h3></div>');
-            console.log(`${ans} is incorrect! The answer was ${randQuestion.correct}`);
+            }
         }
-
+        console.log(`Correct: ${numCorrect}, Incorrect ${numIncorrect}, Unanswered ${numUnanswered}`)
     },
     answerCheck: function (ans) {
         $('.list-answer').remove();
@@ -286,13 +277,49 @@ let game = {
             ${ans}</label>`)
         })
     }
-}
+};
 
+// FUNCTIONS
+
+
+function countdownTimer() {
+    timer--;
+    console.log(`countdownTimer ${timer}`);
+    if (timer < 0) {
+        game.submitAnswer(0);
+    } else {
+        $('#countdown h3').text(`Timer: ${timer}`)
+    }
+};
+function answerTimer() {
+    timer--;
+    console.log(`answerTimer ${timer}`);
+    if (timer < 0) {
+        game.nextQuestion();
+    } else {
+        $('#countdown h3').text(`Timer: ${timer}`)
+    }
+};
+function answerTimerStop() {
+    clearInterval(displayAnswer);
+    console.log(`Stop Answer`)
+};
+
+function countdownTimerStop() {
+    clearInterval(timerLoop);
+    console.log(`Stop Countdown`)
+};
+
+function resetTimer() {
+    timer = 10;
+};
 function resultsScreen() {
+    answerTimerStop();
+    countdownTimerStop();
     $('#questionText').text(`Results`); // if above 75%, pass, else fail
     $('#questionNum').text(`Below is a breakdown of your score.`)
     $('.list-answer, #countdown, #correct').remove();
     $('#answerList').append(`<div class="display-4">Correct: ${numCorrect}</div>`);
     $('#answerList').append(`<div class="display-4">Incorrect: ${numIncorrect}</div>`);
     $('#answerList').append(`<div class="display-4">Unanswered: ${numUnanswered}</div>`);
-}
+};

@@ -194,7 +194,7 @@ let game = {
         numCorrect = 0;
         numIncorrect = 0;
         numUnanswered = 0;
-        questionNum = 19;
+        questionNum = 1;
         // resultsScreen();
         game.nextQuestion();
 
